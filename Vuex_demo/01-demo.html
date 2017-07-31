@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="renderer" content="webkit">
+    <title></title>
+</head>
+<body>
+
+
+<div id="app">
+    <hello></hello>
+    <world></world>
+</div>
+
+<script src="libs/vue.js"></script>
+<script src="libs/vuex.js"></script>
+<script>
+    //通过vuex创建一个项目的中央仓库
+    var store = new Vuex.Store({
+        //共享的状态 {}
+        state:{
+            num:0
+        },
+        //纯函数 pure function /不能ajax
+        mutations:{
+           "ADDNUM":function(state,payload){
+              state.num++;
+           }
+        },
+        //用来接收外部传过来的修改状态的事件
+        //this.$store.dispatch("ADD")
+        actions:{
+            //ajax
+           "ADD":function(store){
+               //请求上级 ajax
+               store.commit("ADDNUM","add sand")
+           }
+        },
+        //共享的状态获取入口
+        getters:{
+             getNum:function(state){
+                 return state.num
+             }
+        }
+    });
+
+    var Hello = {
+
+        computed:Vuex.mapGetters({
+            num:"getNum"
+        }),
+
+
+        methods:{
+          update:function(){
+              this.$store.dispatch("ADD")
+          }
+        },
+        template:"<div><h1>{{num}}</h1> <input type='button' value='update' @click='update'> </div>"
+
+    }
+
+    var World = {
+        computed:Vuex.mapGetters({
+            num:"getNum"
+        }),
+        template:"<div><h1>world:{{num}}</h1></div>"
+    }
+
+    new Vue({
+        el:"#app",
+        store,
+        components:{
+            Hello,
+            World
+        }
+    });
+</script>
+</body>
+</html>
