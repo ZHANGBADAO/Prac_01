@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="demo">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="renderer" content="webkit">
+    <title></title>
+</head>
+<body>
+<div ng-controller="one">{{ msg }}</div>
+
+
+<script src="bower_components/angular/angular.js"></script>
+<script>
+    (function(){
+        //interplation 插值表达示 sass angular vue react
+        //ng-app: 标记在html标签上:用来指令angular的管理边界
+        //ng-app:自引导的起动angular
+        //ng-app: 根据根模块名称 | 为空
+        angular.module("demo",[])
+                .controller("one",$scope=>{
+                  $scope.msg = "hello"
+        })
+
+
+    })()
+</script>
+</body>
+</html>

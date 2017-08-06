@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="demo">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="renderer" content="webkit">
+    <title></title>
+</head>
+<body ng-controller="three as t">
+
+{{t.msg}}
+
+<script src="bower_components/angular/angular.js"></script>
+<script>
+    (function(){
+
+        angular.module("demo",[])
+        //控制器名称 cameral , 类的构造方法
+        // $scope: vm: 连接view和model
+        //gulp: minify uglify
+                //$scopeProvider
+                .controller("one",function($scope){
+                    $scope.msg = "hello"
+                })
+                .controller("two",["$scope",function(a){
+                    a.msg = "hello two"
+                }])
+                .controller("three",function(){
+                    this.msg = "hello three"
+                })
+
+
+
+
+
+    })()
+</script>
+</body>
+</html>

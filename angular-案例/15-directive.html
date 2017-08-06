@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="demo">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="renderer" content="webkit">
+    <title></title>
+</head>
+<body>
+
+<hello title="这是一个标题">
+    <span>world</span>
+</hello>
+
+
+<script type="text/ng-template" id="hello.html">
+  <div>
+      <h1>hello</h1>
+  </div>
+</script>
+
+<script src="bower_components/angular/angular.js"></script>
+<script>
+    (function(){
+
+        //vue let hello = {}
+        angular.module("demo",[])
+        //组件名: 构造方法: (HTML+CSS+JS)
+        //组件显示方式有四定义: Element|attribute
+                .directive("hello",function(){
+                    return {
+                        restrict:"AE", //A:attribute | E: element| c:class | M:
+                        templateUrl:"templates/hello-tpl.html",
+                        replace:false,
+                        transclude:true,
+                        //相当于template的控制器: 不能在外部调用
+                        link:function(scope,el,attr,ctrl){
+
+                            //scope: vm
+                            //el: angular.element()
+                            //attr
+                            scope.title = attr["title"];
+                            console.log(el.children().children());
+                            scope.msg = "hello template";
+                            scope.show = function(){
+                                alert(1);
+                            }
+
+                        }
+                    }
+                })
+
+    })()
+</script>
+
+
+</body>
+</html>

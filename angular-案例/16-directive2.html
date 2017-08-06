@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="demo">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="renderer" content="webkit">
+    <title></title>
+</head>
+<body>
+
+<hello title="这是一个标题">
+
+</hello>
+
+
+
+
+
+<script src="bower_components/angular/angular.js"></script>
+<script>
+    (function(){
+
+        //vue let hello = {}
+        angular.module("demo",[])
+                //组件名: 构造方法: (HTML+CSS+JS)
+                //组件显示方式有四定义: Element|attribute
+                .directive("hello",function(){
+                    return {
+                        scope:{ title:"@"}, //创建一个独立的vm @:绑定字符串
+                        restrict:"AE", //A:attribute | E: element| c:class | M:
+                        template:`<div>
+                           {{title}}
+                           <input type="text" ng-model="msg"> {{msg}}
+                        </div>`,
+                        replace:false,
+                        transclude:true,
+                        //相当于template的控制器: 不能在外部调用
+                        link:function(scope,el,attr,ctrl){
+//                            scope.title = attr["title"]
+                        }
+                    }
+                })
+
+    })()
+</script>
+
+
+</body>
+</html>

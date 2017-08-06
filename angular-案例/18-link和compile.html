@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="demo">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="renderer" content="webkit">
+    <title></title>
+</head>
+<body>
+
+<hello></hello>
+<script src="bower_components/angular/angular.js"></script>
+<script>
+    (function(){
+        angular.module("demo",[])
+                .directive("hello",function(){
+                    return {
+                        restrict:"AE",
+                        template:"<div>hello {{msg}}</div>",
+                        link:function(scope,element,attr,ctrl){
+                            console.log(0);
+                        },
+                        //angular:$compile编译 html
+//                        compile:function(){
+//                            return {
+//                                //pre-link
+//                                pre:function(scope,element,attr,ctrl){
+//                                    console.log(1);
+//                                    scope.msg = "pre-link";
+//                                },
+//                                //post-link
+//                                post:function(scope,element,attr,ctrl){
+//                                    console.log(2);
+//                                    scope.msg += "post-linl"
+//                                }
+//                            }
+//                        }
+                    }
+                })
+
+    })()
+</script>
+
+
+</body>
+</html>

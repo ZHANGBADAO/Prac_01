@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="renderer" content="webkit">
+    <title></title>
+    <style>
+        [v-cloak]{
+            display: none;
+        }
+        .ng-cloak {
+            display: none;
+        }
+
+    </style>
+</head>
+<body>
+
+<div id="app" v-cloak>
+    {{msg}}
+    <input type="text" v-model="msg">
+</div>
+
+
+<div ng-app="app" class="ng-cloak">
+    <div ng-controller="one">
+        {{msg}}
+        <input type="text" ng-model="msg">
+    </div>
+</div>
+
+<script src="bower_components/angular/angular.js"></script>
+<script src="bower_components/vue/vue.js"></script>
+<script>
+    (function(){
+
+        new Vue({
+            el:"#app",
+            data:{
+                msg:"hello"
+            }
+        })
+
+        // complete client-side solution
+        angular.module("app",[])
+                .controller("one",function($scope){
+                    $scope.msg = "hello"
+                })
+    })()
+</script>
+</body>
+</html>

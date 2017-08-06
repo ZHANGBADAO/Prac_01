@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="demo">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="renderer" content="webkit">
+    <title></title>
+</head>
+<body >
+
+<div ng-controller="one">
+    <my-hello></my-hello>
+</div>
+
+<div ng-controller="two">
+    <my-hello></my-hello>
+</div>
+
+<script src="bower_components/angular/angular.js"></script>
+<script>
+    (function(){
+
+        //vue,react
+        angular.module("demo",[])
+                .service("hellService",function(){
+                    this.getMsg = function(){
+                        return ["html5","angular","react"];
+                    }
+                })
+                .directive("myHello",function(hellService){
+                    return {
+                        template:`<div ng-click='show()'>
+                            <ul>
+                               <li ng-repeat="n in ll">{{n}}</li>
+                            </ul>
+                        </div>`,
+                        link:function(scope,element,attr,ctrl){
+                            scope.ll = hellService.getMsg();
+                        }
+                    }
+                })
+                .controller("one",function($scope){
+                    $scope.msg = "one";
+                    $scope.show = function(){
+                        alert(`1`);
+                    };
+                    $scope.lists = ["html5","angular","react"]
+                })
+                .controller("two",function($scope){
+                    $scope.msg = "two";
+                    $scope.show = function(){
+                        alert(`2`);
+                    }
+                    $scope.lists = ["html5","angular","react"]
+                })
+
+    })()
+</script>
+
+
+</body>
+</html>

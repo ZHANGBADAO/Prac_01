@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="demo">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="renderer" content="webkit">
+    <title></title>
+</head>
+<body>
+
+<a href="#!/hello">hello</a>  <a href="#!/world">world</a>
+
+<div ng-view></div>
+
+<script type="text/ng-template" id="hello.html">
+    <div>hello: {{msg}}</div>
+</script>
+
+
+<script type="text/ng-template" id="world.html">
+    <div>world: {{msg}}</div>
+</script>
+
+
+<script src="bower_components/angular/angular.js"></script>
+<script src="node_modules/angular-route/angular-route.js"></script>
+<script>
+    (function(){
+
+        angular.module("demo",["ngRoute"])
+                .config(function($routeProvider){
+
+                    $routeProvider.when("/hello",{
+                        templateUrl:"hello.html",
+                        controller:"helloCtrl"
+                    }).when("/world/:id/:name",{
+                        templateUrl:"world.html",
+                        controller:"worldCtrl"
+                    }).when("/world",{
+                        templateUrl:"world.html",
+                        controller:"worldCtrl"
+                    }).otherwise("/hello")
+
+                })
+                .controller("helloCtrl",function($scope){
+                   $scope.msg = "hello"
+                }).controller("worldCtrl",function($scope,$routeParams){
+
+                   $scope.msg = "world:" + $routeParams.name
+                })
+
+    })()
+</script>
+
+
+</body>
+</html>

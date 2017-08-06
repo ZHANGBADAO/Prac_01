@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="demo">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="renderer" content="webkit">
+    <title></title>
+</head>
+<body ng-controller="one">
+
+<ul>
+    <li ng-repeat="n in products">{{n.goodsName}}</li>
+</ul>
+
+<script src="bower_components/angular/angular.js"></script>
+<script src="node_modules/fetch-jsonp/build/fetch-jsonp.js"></script>
+<script>
+    (function(){
+        angular.module("demo",[])
+                .controller("one",function($scope,oneProvider){
+                    //控制器内不能调用ajax
+                    oneProvider.getPro(function(data){
+                        $scope.products=data;
+                    });
+                })
+                .service("oneServ",function($http,$sce){
+
+                    this.getProducts = function(cb){
+                        var url ="http://datainfo.duapp.com/shopdata/selectGoodes.php?selectText=%E8%A1%A3";
+                        return $http({
+                            method:"JSONP",
+                            url:$sce.trustAsResourceUrl(url),
+                            jsonpCallbackParam:"callback" //sub.get
+                        }).then(function(success){
+                            console.log(success.data);
+                            cb(success.data);
+                        })
+                    }
+
+                })
+                .factory("oneFactroy",function($sce){
+
+                    var getProducts = function(){
+                        var url ="http://datainfo.duapp.com/shopdata/selectGoodes.php?selectText=%E8%A1%A3";
+                        return fetch(
+                                url,
+                                {
+                                    headers:{
+                                        'content-type':'application/json'
+                                    },
+                                    method: 'GET',
+                                    mode: 'no-cors',
+                                    cache: 'default'
+                                }
+                        ).then(function(res){
+                            console.log(res);
+                            res.json().then(function(data){
+                                console.log(data.data);
+                                cb(data.data);
+                            })
+                        })
+                    }
+
+                    return {
+                        getPro:getProducts
+                    }
+                })
+                .provider("oneProvider",function(){
+
+                    //setter getter
+
+                    this.$get = function(){
+                        var getProducts = function(cb){
+                            var url ="http://datainfo.duapp.com/shopdata/selectGoodes.php?selectText=%E8%A1%A3";
+
+                            return fetchJsonp(url, {
+                                jsonpCallback: 'qf',
+                                jsonpCallbackFunction: 'callback'
+
+                            })
+                                    .then(function(response) {
+                                        console.log(response);
+                                        cb( response.json())
+                                    }).then(function(json) {
+                                        console.log('parsed json', json)
+                                    }).catch(function(ex) {
+                                        console.log('parsing failed', ex)
+                                    })
+                        }
+
+                        return {
+                            getPro:getProducts
+                        }
+                    }
+                })
+
+
+    })()
+</script>
+</body>
+</html>

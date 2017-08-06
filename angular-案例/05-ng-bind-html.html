@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="demo">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="renderer" content="webkit">
+    <title></title>
+</head>
+<body ng-controller="one">
+{{html}}
+<span ng-bind="msg"></span>
+<span ng-bind-html="html"></span>
+<script src="bower_components/angular/angular.js"></script>
+<script>
+    (function(){
+        angular.module("demo",[])
+                .controller("one",function($scope,$sce){
+                    $scope.msg = "hello";
+                    //类有什么 特点: 使用前需要先实例化
+                    //angularjs中所有的类必须以注入的方式才能使用，不能在一个类里面，对另外一个类进行 实例化
+
+                    //$xxx == 内置服务类 $区别内置的类和我们自定义的类的区别
+                    $scope.html =  $sce.trustAsHtml("<h1>hello html</h1>");
+                })
+
+    })()
+</script>
+</body>
+</html>

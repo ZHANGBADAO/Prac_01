@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="renderer" content="webkit">
+    <title></title>
+</head>
+<body>
+
+<div ng-app="B">
+    <div ng-controller="onec">
+        {{msg}}
+    </div>
+</div>
+
+<script src="bower_components/angular/angular.js"></script>
+<script>
+    (function(){
+
+        //如何创建一个模块 jQuery $ window.angular
+       var app=  angular.module("demo",[]);
+        //获取模块信息
+       //console.log(angular.module('demo'));
+
+        //模块之间的关系 : 聚合
+        var A = angular.module("A",[]);
+        A.controller("onea",function($scope){
+            $scope.msg = "hello one a"
+        }) ; //
+
+        var c = angular.module("c",[]);
+        c.controller("onec",function($scope){
+            $scope.msg = "hello one c"
+        }) ; //
+
+        var B = angular.module("B",["A","c"]);
+        B.controller("oneb",function($scope){
+            $scope.msg = "hello one b"
+        });
+
+        console.log(B);
+
+
+    })()
+</script>
+</body>
+</html>
